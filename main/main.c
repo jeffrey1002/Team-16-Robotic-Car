@@ -33,7 +33,7 @@ int main() {
     printf("SSI Handler initialised\n");
     cgi_init();
     printf("CGI Handler initialised\n");
-    
+
     // Infinite loop
     while(1);
 }
