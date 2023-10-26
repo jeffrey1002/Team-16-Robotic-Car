@@ -4,9 +4,11 @@
 * Raspberry Pico
 * 1x L298N Motor Driver
 * 2x DC Motor
-* 2x Counting Speed Sensor
-* 3x Line Tracking Sensor 
+* 2x Speed Sensor / Encoder
+* 3x Line Tracking Sensor (Infrared Sensor)
 * 1x Ultrasonic Sensor
+* 1x Breadboard
+* 4x AA Batteries
 
 ##### Pin Layout
 | Hardware | GPIO # |
