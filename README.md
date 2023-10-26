@@ -13,11 +13,11 @@
 ##### Pin Layout
 | Hardware | GPIO # |
 |---|---|
-| Motor Control | ? - IN1 <br/> ? - IN2 <br/> ? - IN3 <br/> ? - IN4|
-| Motor PWM | ? - Left Motor <br/> ? - Right Motor |
-| Speed Sensor | ? - Digital IN |
+| Motor Control | GP10 - IN1 <br/> 11 - IN2 <br/> 3 - IN3 <br/> 4 - IN4 |
+| Motor PWM | 8 - Left Motor <br/> 9 - Right Motor |
+| Speed Sensor | ? - Left <br/> GP7 - Right |
 | Line Tracking Sensor | ? - Digital IN |
-| Ultrasonic Sensor | ? - Digital IN |
+| Ultrasonic Sensor | GP6 - Echo </br> GP5 - Trigger |
 
 
 ##### Setting up environment 
