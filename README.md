@@ -18,6 +18,7 @@
 | Speed Sensor | ? - Left <br/> GP7 - Right |
 | Line Tracking Sensor | ? - Digital IN |
 | Ultrasonic Sensor | GP6 - Echo </br> GP5 - Trigger |
+| Magnetometer | SDA - ? </br> SLA - ? |
 
 
 ##### Setting up environment 
