@@ -11,14 +11,19 @@ project(${PROGRAM_NAME})
 
 pico_sdk_init()
 
+add_subdirectory(magneto)
+
 # Add the main.c source file to the executable
 add_executable(${PROGRAM_NAME}
     main.c
 )
 
+
 target_include_directories(${PROGRAM_NAME} PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}
     ${CMAKE_CURRENT_LIST_DIR}/webserver
+    ${CMAKE_CURRENT_LIST_DIR}/magneto
+
 )
 
 target_link_libraries(${PROGRAM_NAME}
@@ -32,3 +37,4 @@ pico_enable_stdio_usb(${PROGRAM_NAME} TRUE)
 pico_enable_stdio_uart(${PROGRAM_NAME} FALSE)
 
 pico_add_extra_outputs(${PROGRAM_NAME})
+
