@@ -1,15 +1,10 @@
-#include <stdio.h>
-#include "pico/stdlib.h"
-#include "hardware/gpio.h"
-#include "hardware/pwm.h"
-#include "hardware/timer.h"
 #include "motor_control.h" // Custom header file containing L298N motor, Wheel Encoder and Ultrasonic sensor functions
 
 int main()
 {
     stdio_init_all(); // Initialise Serial connections
     initGPIO(); // Initialise GPIO pins
-    
+
     // PWM slice connected to GPIO 9 (Left motor)
     uint slice_num_left = pwm_gpio_to_slice_num(9);
     // PWM slice connected to GPIO 8 (Right motor)
