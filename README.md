@@ -14,8 +14,8 @@
 | Hardware | GPIO # |
 |---|---|
 | Motor Control | GP10 - IN1 <br/> 11 - IN2 <br/> 3 - IN3 <br/> 4 - IN4 |
-| Motor PWM | 8 - Left Motor <br/> 9 - Right Motor |
-| Speed Sensor | ? - Left <br/> GP7 - Right |
+| Motor PWM | 9 - Left Motor <br/> 8 - Right Motor |
+| Speed Sensor | GP12 - Left <br/> GP7 - Right |
 | Line Tracking Sensor | ? - Digital IN |
 | Ultrasonic Sensor | GP6 - Echo </br> GP5 - Trigger |
 | Magnetometer | SDA - ? </br> SLA - ? |
