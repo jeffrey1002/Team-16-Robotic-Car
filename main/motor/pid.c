@@ -1,3 +1,5 @@
+#include "headers.h" // All headers inside here
+#include "constants.h" // All constants inside here
 #include "motor_control.h" // Custom header file containing L298N motor, Wheel Encoder and Ultrasonic sensor functions
 
 int main()
@@ -5,10 +7,8 @@ int main()
     stdio_init_all(); // Initialise Serial connections
     initGPIO(); // Initialise GPIO pins
 
-    // PWM slice connected to GPIO 9 (Left motor)
-    uint slice_num_left = pwm_gpio_to_slice_num(9);
-    // PWM slice connected to GPIO 8 (Right motor)
-    uint slice_num_right = pwm_gpio_to_slice_num(8);
+    uint slice_num_left = pwm_gpio_to_slice_num(9); // PWM slice connected to GPIO 9 (Left motor)
+    uint slice_num_right = pwm_gpio_to_slice_num(8); // PWM slice connected to GPIO 8 (Right motor)
     initialize_motors(slice_num_left, slice_num_right); // Initialise PWM motors
 
     sleep_ms(1000); // Delay to init everything before run
