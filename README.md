@@ -16,7 +16,7 @@
 | Motor Control | GP10 - IN1 <br/> GP11 - IN2 <br/> GP3 - IN3 <br/> GP4 - IN4 |
 | Motor PWM | GP9 - Left Motor <br/> GP8 - Right Motor |
 | Speed Sensor | GP12 - Left <br/> GP7 - Right |
-| Line Tracking Sensor | ? - Digital IN |
+| Line Tracking Sensor | GP26 - Barcode <br/> GP27 - Line Right <br/> GP28 - Line Left |
 | Ultrasonic Sensor | GP6 - Echo </br> GP5 - Trigger |
 | Magnetometer | ? - SDA </br> ? - SLA |
 
