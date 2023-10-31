@@ -23,7 +23,7 @@ target_include_directories(${PROGRAM_NAME} PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}
     ${CMAKE_CURRENT_LIST_DIR}/webserver
     ${CMAKE_CURRENT_LIST_DIR}/magneto
-
+    ${CMAKE_CURRENT_LIST_DIR}/barcode
 )
 
 target_link_libraries(${PROGRAM_NAME}
