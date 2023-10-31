@@ -18,7 +18,7 @@
 | Speed Sensor | GP12 - Left <br/> GP7 - Right |
 | Line Tracking Sensor | GP26 - Barcode <br/> GP27 - Line Right <br/> GP28 - Line Left |
 | Ultrasonic Sensor | GP6 - Echo </br> GP5 - Trigger |
-| Magnetometer | ? - SDA </br> ? - SLA |
+| Magnetometer | GP1 - SDA </br> GP0 - SLA |
 
 
 ##### Setting up environment 
