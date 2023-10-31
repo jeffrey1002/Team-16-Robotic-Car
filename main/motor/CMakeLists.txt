@@ -11,4 +11,4 @@ pico_enable_stdio_usb(motor 1)
 pico_add_extra_outputs(motor)
 
 # add url via pico_set_program_url
-example_auto_set_url(motor)
+# example_auto_set_url(motor)

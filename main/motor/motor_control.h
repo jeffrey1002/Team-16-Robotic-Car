@@ -87,8 +87,26 @@ void speed(uint slice_num_left, uint slice_num_right) {
     encoder_counts_left = 0;
     encoder_counts_right = 0;
 
-    printf("Car Speed: %.2f cm/s\n\n", car_speed);;
+    printf("Car Speed: %.2f cm/s\n\n", car_speed);
 }
+
+// void travel_distance(uint slice_num_left, uint slice_num_right) {
+//     // Calculate the distance covered by each wheel in 0.3 seconds
+//     float distance_left = (encoder_counts_left * WHEEL_CIRCUMFERENCE * 3.14159265359) / ENCODER_PULSES_PER_REVOLUTION;
+//     float distance_right = (encoder_counts_right * WHEEL_CIRCUMFERENCE * 3.14159265359) / ENCODER_PULSES_PER_REVOLUTION;
+
+//     // Calculate average distance covered by the two wheels
+//     float avg_distance = (distance_left + distance_right) / 2.0;
+
+//     // Add the average distance to the total distance travelled
+//     total_distance_travelled += avg_distance;
+
+//     // Reset encoder_counts for both wheels
+//     encoder_counts_left = 0;
+//     encoder_counts_right = 0;
+
+//     printf("Distance Travelled: %.2f cm\n", total_distance_travelled);
+// }
 
 /************************************
  * Motor Movement Related Functions *
