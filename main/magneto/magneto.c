@@ -1,17 +1,5 @@
-#include <stdio.h>
-#include <math.h>
-#include "pico/stdlib.h"
-#include "hardware/i2c.h"
-#include <string.h>   
+#include "magneto.h"
 
-
-#define MAGNETOMETER_ADDRESS 0x1E
-#define CONFIG_REG_A 0x00
-#define MODE_REG 0x02
-#define DATA_REG_X_MSB 0x03
-#define SDA_PIN 0
-#define SCL_PIN 1
-#define M_PI 3.14159265358979323846
 
 void custom_i2c_init(i2c_inst_t *i2c) {
     printf("[Magnetometer] Init start \n");

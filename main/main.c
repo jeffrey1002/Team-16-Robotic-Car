@@ -5,6 +5,11 @@
 #include "ssi.h"
 #include "cgi.h"
 
+#include "motor_control.h" 
+
+#include "magneto.h"
+
+
 // http://192.168.10.135/ 
 
 const char WIFI_SSID[] = "Phileo's Phone";
@@ -33,7 +38,7 @@ int main() {
     printf("SSI Handler initialised\n");
     cgi_init();
     printf("CGI Handler initialised\n");
-
+        
     // Infinite loop
     while(1);
 }

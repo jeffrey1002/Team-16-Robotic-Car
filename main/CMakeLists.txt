@@ -13,7 +13,6 @@ pico_sdk_init()
 
 add_subdirectory(magneto)
 add_subdirectory(motor)
-add_subdirectory(barcode)
 
 
 # Add the main.c source file to the executable
@@ -35,6 +34,8 @@ target_link_libraries(${PROGRAM_NAME}
     pico_lwip_http
     pico_stdlib
     hardware_adc
+    hardware_pwm
+    hardware_i2c
 )
 
 pico_enable_stdio_usb(${PROGRAM_NAME} TRUE)
