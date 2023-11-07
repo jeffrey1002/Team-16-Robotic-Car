@@ -1,6 +1,5 @@
 #include "magneto.h"
 
-
 void custom_i2c_init(i2c_inst_t *i2c) {
     printf("[Magnetometer] Init start \n");
     stdio_init_all();

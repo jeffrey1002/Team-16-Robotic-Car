@@ -7,7 +7,6 @@
 #include <string.h>   
 #include "hardware/i2c.h"
 
-
 // Macros
 #define MAGNETOMETER_ADDRESS 0x1E
 #define CONFIG_REG_A 0x00
