@@ -1,5 +1,5 @@
 add_executable(motor
-        pid.c
+        motor_control.c
         )
 
 # pull in common dependencies and additional pwm hardware support
