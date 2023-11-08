@@ -15,8 +15,8 @@ u16_t ssi_handler(int iIndex, char *pcInsert, int iInsertLen) {
     switch (iIndex) {
         case 0: // volt
         {
-            printed = snprintf(pcInsert, iInsertLen, "%.2f", current_speed);
-        }
+            const float voltage = adc_read() * 3.3f / (1 << 12);
+            printed = snprintf(pcInsert, iInsertLen, "%f", voltage);        }
         break;
         case 1: // temp
         {
