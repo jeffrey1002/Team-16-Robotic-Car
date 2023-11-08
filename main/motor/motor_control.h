@@ -4,38 +4,38 @@
 #include "..\headers.h"
 #include "..\constants.h"
 
-// Define PID controller parameters (adjust these as needed)
-#define KP 1.0
-#define KI 0.0
-#define KD 0.0
+// // Define PID controller parameters (adjust these as needed)
+// #define KP 1.0
+// #define KI 0.0
+// #define KD 0.0
 
-// Internal variables for PID control
-static double integral = 0.0;
-static double prev_error = 0.0;
+// // Internal variables for PID control
+// static double integral = 0.0;
+// static double prev_error = 0.0;
 
-// TODO:
-// void pid_init() {
-//     // Initialize PID variables, if needed
+// // TODO:
+// // void pid_init() {
+// //     // Initialize PID variables, if needed
+// // }
+
+// double pid_update(double setpoint, double current_value) {
+//     // Calculate error (desired setpoint - current input)
+//     double error = setpoint - current_value;
+
+//     // Calculate integral term
+//     integral += error;
+
+//     // Calculate derivative term
+//     double derivative = error - prev_error;
+
+//     // Calculate control output
+//     double output = KP * error + KI * integral + KD * derivative;
+
+//     // Update previous error for the next iteration
+//     prev_error = error;
+
+//     return output;
 // }
-
-double pid_update(double setpoint, double current_value) {
-    // Calculate error (desired setpoint - current input)
-    double error = setpoint - current_value;
-
-    // Calculate integral term
-    integral += error;
-
-    // Calculate derivative term
-    double derivative = error - prev_error;
-
-    // Calculate control output
-    double output = KP * error + KI * integral + KD * derivative;
-
-    // Update previous error for the next iteration
-    prev_error = error;
-
-    return output;
-}
 
 
 void encoder_pulse_handler_left() {
