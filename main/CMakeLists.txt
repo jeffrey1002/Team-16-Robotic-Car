@@ -18,6 +18,7 @@ add_subdirectory(motor)
 # Add the main.c source file to the executable
 add_executable(${PROGRAM_NAME}
     main.c
+    motor/motor_control.c
 )
 
 

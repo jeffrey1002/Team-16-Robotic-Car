@@ -2,38 +2,43 @@
 #include "..\constants.h" // All constants inside here
 #include "motor_control.h" // Custom header file containing L298N motor, Wheel Encoder and Ultrasonic sensor functions
 
-// Define PID controller parameters (adjust these as needed)
-#define KP 1.0
-#define KI 0.0
-#define KD 0.0
+// Variables for tracking distance
+volatile int encoder_counts_left = 0;
+volatile int encoder_counts_right = 0;
+volatile float total_distance_travelled = 0.0;
 
-// Internal variables for PID control
-static double integral = 0.0;
-static double prev_error = 0.0;
+// Define PID controller parameters (adjust these as needed)
+// #define KP 1.0
+// #define KI 0.0
+// #define KD 0.0
+
+// // Internal variables for PID control
+// static double integral = 0.0;
+// static double prev_error = 0.0;
 
 // TODO
 // void pid_init() {
 //     // Initialize PID variables, if needed
 // }
 
-double pid_update(double setpoint, double current_value) {
-    // Calculate error (desired setpoint - current input)
-    double error = setpoint - current_value;
+// double pid_update(double setpoint, double current_value) {
+//     // Calculate error (desired setpoint - current input)
+//     double error = setpoint - current_value;
 
-    // Calculate integral term
-    integral += error;
+//     // Calculate integral term
+//     integral += error;
 
-    // Calculate derivative term
-    double derivative = error - prev_error;
+//     // Calculate derivative term
+//     double derivative = error - prev_error;
 
-    // Calculate control output
-    double output = KP * error + KI * integral + KD * derivative;
+//     // Calculate control output
+//     double output = KP * error + KI * integral + KD * derivative;
 
-    // Update previous error for the next iteration
-    prev_error = error;
+//     // Update previous error for the next iteration
+//     prev_error = error;
 
-    return output;
-}
+//     return output;
+// }
 
 
 void encoder_pulse_handler_left() {
