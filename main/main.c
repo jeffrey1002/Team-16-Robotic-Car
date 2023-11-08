@@ -58,9 +58,6 @@ int main() {
             crawl_forward(slice_num_left, slice_num_right);
             if (obstacle_distance < 15.0)
             {
-                // if obstacle is < 15cm, turn the car 90 degrees to the right
-                spin_right_90(slice_num_left, slice_num_right);
-                // Reverse car
                 stop(slice_num_left,slice_num_right);
             }
         }

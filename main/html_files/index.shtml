@@ -70,6 +70,7 @@
         <p>Voltage: <span id="volt"><!--#volt--></span> V</p>
         <p>Temp: <span id="temp"><!--#temp--></span> C</p>
         <p>Robot speed is: <span id="speed"><!--#speed--></span> cm/s</p>
+        <p>Distance Travelled: <span id="dist"><!--#dist--></span> cm</p>
         <p>Robot is: <span id="robot"><!--#robot--></span></p>
         <div class="button-container">
             <h2>Initialization of Robotic Car:</h2>

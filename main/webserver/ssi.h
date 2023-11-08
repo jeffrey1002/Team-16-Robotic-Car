@@ -8,7 +8,7 @@
 #define POWER_PIN 27
 
 // SSI tags - tag length limited to 8 bytes by default
-const char *ssi_tags[] = {"volt", "temp", "robot" , "speed"};
+const char *ssi_tags[] = {"volt", "temp", "robot" , "speed" , "dist"};
 
 u16_t ssi_handler(int iIndex, char *pcInsert, int iInsertLen) {
     size_t printed;
@@ -41,6 +41,11 @@ u16_t ssi_handler(int iIndex, char *pcInsert, int iInsertLen) {
         case 3: // speed
         {
             printed = snprintf(pcInsert, iInsertLen, "%.2f", current_speed);
+        }
+        break;
+        case 4: // distance_travelled 
+        {
+            printed = snprintf(pcInsert, iInsertLen, "%.2f", total_distance_travelled);
         }
         break;
         default:

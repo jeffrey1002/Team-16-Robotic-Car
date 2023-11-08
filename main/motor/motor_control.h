@@ -87,11 +87,17 @@ void speed(uint slice_num_left, uint slice_num_right) {
     float car_speed = (avg_wheel_rpm * WHEEL_CIRCUMFERENCE * 3.14159265359) / (ENCODER_PULSES_PER_REVOLUTION * 60.0);
     current_speed = car_speed; 
 
+    distance_travelled = car_speed * 1;
+
+    total_distance_travelled += distance_travelled;
     // Reset encoder_counts for both wheels
     encoder_counts_left = 0;
     encoder_counts_right = 0;
 
     printf("Car Speed: %.2f cm/s\n\n", car_speed);
+    printf("Distance : %.2f cm\n\n", distance_travelled);
+    printf("Distance Travelled: %.2f cm\n\n", total_distance_travelled);
+
 }
 
 // void travel_distance(uint slice_num_left, uint slice_num_right) {
