@@ -15,6 +15,7 @@
 const char WIFI_SSID[] = "Yap Family";
 const char WIFI_PASSWORD[] = "98006093";
 
+
 int main() {
     stdio_init_all();
 
@@ -48,23 +49,35 @@ int main() {
 
     while (1)
     {
-        // Read distance of nearest obstacle ahead (if any) through the ultrasonic sensor
-        float obstacle_distance = readDistance();
+        // Only proceed if forward is set to 1
+        if (forward == 1)
+        {
+            // Read distance of nearest obstacle ahead (if any) through the ultrasonic sensor
+            float obstacle_distance = readDistance();
 
-        // Check if an obstacle is detected within 30cm
-        if (obstacle_distance < 30.0)
-        { 
-            // if < 30cm, activate crawl mode to approach forward slowly
-            crawl_forward(slice_num_left, slice_num_right);
-            if (obstacle_distance < 15.0)
+            // Check if an obstacle is detected within 30cm
+            if (obstacle_distance < 30.0)
+            { 
+                // if < 30cm, activate crawl mode to approach forward slowly
+                crawl_forward(slice_num_left, slice_num_right);
+                
+                // Check if the obstacle is closer than 15cm
+                if (obstacle_distance < 15.0)
+                {
+                    // Stop moving if obstacle is closer than 15cm
+                    stop(slice_num_left, slice_num_right);
+                }
+            }
+            else
             {
-                stop(slice_num_left,slice_num_right);
+                // No obstacle detected within 30cm, move forward fast
+                fast_forward(slice_num_left, slice_num_right);
             }
         }
         else
         {
-            // Move forward fast
-            fast_forward(slice_num_left, slice_num_right);
+            // Forward is 0, stop moving 
+            stop(slice_num_left, slice_num_right); 
         }
     }
 
