@@ -13,7 +13,7 @@ pico_sdk_init()
 
 add_subdirectory(magneto)
 add_subdirectory(motor)
-
+add_subdirectory(infrared)
 
 # Add the main.c source file to the executable
 add_executable(${PROGRAM_NAME}
@@ -25,7 +25,7 @@ target_include_directories(${PROGRAM_NAME} PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}
     ${CMAKE_CURRENT_LIST_DIR}/webserver
     ${CMAKE_CURRENT_LIST_DIR}/magneto
-    ${CMAKE_CURRENT_LIST_DIR}/barcode
+    ${CMAKE_CURRENT_LIST_DIR}/infrared
     ${CMAKE_CURRENT_LIST_DIR}/motor
 )
 

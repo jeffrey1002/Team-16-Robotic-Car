@@ -5,10 +5,9 @@
 #include "ssi.h"
 #include "cgi.h"
 
-#include "motor_control.h" 
-
 #include "magneto.h"
-
+#include "motor_control.h" 
+#include "infrared.h"
 
 // http://192.168.10.135/ 
 
@@ -27,6 +26,8 @@ int main() {
     uint slice_num_left = pwm_gpio_to_slice_num(9); // PWM slice connected to GPIO 9 (Left motor)
     uint slice_num_right = pwm_gpio_to_slice_num(8); // PWM slice connected to GPIO 8 (Right motor)
     initialize_motors(slice_num_left, slice_num_right); // Initialise PWM motors
+
+    init_line_detector();
     
     sleep_ms(2000); // Delay to init everything before run
 
@@ -54,6 +55,10 @@ int main() {
         {
             // Read distance of nearest obstacle ahead (if any) through the ultrasonic sensor
             float obstacle_distance = readDistance();
+
+            // Check if there is wall (black line) to change motor direction
+            line_detect_right(slice_num_left, slice_num_right);
+            line_detect_left(slice_num_left, slice_num_right);
 
             // Check if an obstacle is detected within 30cm
             if (obstacle_distance < 30.0)
