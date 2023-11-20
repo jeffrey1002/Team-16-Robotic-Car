@@ -12,8 +12,8 @@
 
 // http://192.168.10.135/ 
 
-const char WIFI_SSID[] = "Yap Family";
-const char WIFI_PASSWORD[] = "98006093";
+const char WIFI_SSID[] = "Phileo's Phone";
+const char WIFI_PASSWORD[] = "93803349";
 
 
 int main() {

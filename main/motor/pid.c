@@ -7,6 +7,7 @@
 #include "hardware/gpio.h"
 #include "hardware/pwm.h"
 #include "hardware/timer.h"
+#include "motor_control.h"
 // #include "motor_control.h"
 
 // GPIO pins connected to the L298N motor driver
@@ -124,6 +125,8 @@ void speed_and_distance(uint slice_num_left, uint slice_num_right) {
     printf("Car Speed: %.2f cm/s\n", car_speed);
     printf("Distance travelled: %0.2fcm\n\n", total_distance_travelled);
 }
+
+
 
 /************************************
  * Motor Movement Related Functions *
