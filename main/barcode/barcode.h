@@ -7,4 +7,7 @@
 #include "hardware/gpio.h"
 #include "hardware/adc.h"
 
+volatile char barcode_value;
+
+
 #endif

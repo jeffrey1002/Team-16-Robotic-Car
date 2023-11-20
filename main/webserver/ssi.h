@@ -3,11 +3,12 @@
 #include "hardware/adc.h"
 #include "hardware/gpio.h"
 #include "motor_control.h" 
+#include "barcode.h"
 
 volatile int forward;
 
 // SSI tags - tag length limited to 8 bytes by default
-const char *ssi_tags[] = {"volt", "temp", "robot" , "speed" , "dist"};
+const char *ssi_tags[] = {"volt", "temp", "robot" , "speed" , "dist" , "code"};
 
 u16_t ssi_handler(int iIndex, char *pcInsert, int iInsertLen) {
     size_t printed;
@@ -41,6 +42,11 @@ u16_t ssi_handler(int iIndex, char *pcInsert, int iInsertLen) {
         }
         break;
         case 4: // distance_travelled 
+        {
+            printed = snprintf(pcInsert, iInsertLen, "%.2f", total_distance_travelled);
+        }
+        break;
+        case 5: // barcode  
         {
             printed = snprintf(pcInsert, iInsertLen, "%.2f", total_distance_travelled);
         }
