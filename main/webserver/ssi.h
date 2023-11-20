@@ -3,12 +3,12 @@
 #include "hardware/adc.h"
 #include "hardware/gpio.h"
 #include "motor_control.h" 
+#include "barcode.h"
 
-
-#define POWER_PIN 27
+volatile int forward;
 
 // SSI tags - tag length limited to 8 bytes by default
-const char *ssi_tags[] = {"volt", "temp", "robot" , "speed"};
+const char *ssi_tags[] = {"volt", "temp", "robot" , "speed" , "dist" , "code"};
 
 u16_t ssi_handler(int iIndex, char *pcInsert, int iInsertLen) {
     size_t printed;
@@ -27,13 +27,11 @@ u16_t ssi_handler(int iIndex, char *pcInsert, int iInsertLen) {
         break;
         case 2: // robot
         {
-            // Assuming POWER_PIN is used for robot control
-            gpio_set_function(POWER_PIN, GPIO_FUNC_SIO);
-            
-            bool robot_status = gpio_get(POWER_PIN);
-            if (robot_status == true) {
+            if (forward == 1) {
+                // If forward is 1, robot is ON
                 printed = snprintf(pcInsert, iInsertLen, "ON");
             } else {
+                // If forward is not 1, assume robot is OFF
                 printed = snprintf(pcInsert, iInsertLen, "OFF");
             }
         }
@@ -41,6 +39,16 @@ u16_t ssi_handler(int iIndex, char *pcInsert, int iInsertLen) {
         case 3: // speed
         {
             printed = snprintf(pcInsert, iInsertLen, "%.2f", current_speed);
+        }
+        break;
+        case 4: // distance_travelled 
+        {
+            printed = snprintf(pcInsert, iInsertLen, "%.2f", total_distance_travelled);
+        }
+        break;
+        case 5: // barcode  
+        {
+            printed = snprintf(pcInsert, iInsertLen, "%.2f", total_distance_travelled);
         }
         break;
         default:

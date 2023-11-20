@@ -25,7 +25,8 @@
 // Variables for tracking distance
 volatile int encoder_counts_left = 0;
 volatile int encoder_counts_right = 0;
-volatile float total_distance_travelled = 0.0;
+volatile float distance_travelled;
+volatile float total_distance_travelled;
 volatile float current_speed;
 
 #endif

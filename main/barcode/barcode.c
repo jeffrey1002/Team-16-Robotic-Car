@@ -1,5 +1,7 @@
 #include "barcode.h"
 
+volatile char barcode_value = 'b';
+
 typedef struct CharacterMapping
 {
     char character;

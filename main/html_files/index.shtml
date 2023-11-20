@@ -70,7 +70,9 @@
         <p>Voltage: <span id="volt"><!--#volt--></span> V</p>
         <p>Temp: <span id="temp"><!--#temp--></span> C</p>
         <p>Robot speed is: <span id="speed"><!--#speed--></span> cm/s</p>
+        <p>Distance Travelled: <span id="dist"><!--#dist--></span> cm</p>
         <p>Robot is: <span id="robot"><!--#robot--></span></p>
+        <p>Barcode value is: <span id="code"><!--#code--></span></p>
         <div class="button-container">
             <h2>Initialization of Robotic Car:</h2>
             <a href="/robot.cgi?robot=1" class="button on-button">ON</a>

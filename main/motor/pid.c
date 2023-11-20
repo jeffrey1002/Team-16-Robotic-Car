@@ -8,7 +8,6 @@
 #include "hardware/pwm.h"
 #include "hardware/timer.h"
 // #include "motor_control.h"
-// #include "constants.h"
 
 // GPIO pins connected to the L298N motor driver
 #define MOTOR_ENA 9  // Enable Motor A (GP9) Left motor
@@ -335,6 +334,7 @@ float readDistance()
 
     return distance_cm;
 }
+
 
 int main()
 {
