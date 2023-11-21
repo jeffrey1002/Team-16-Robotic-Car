@@ -7,7 +7,6 @@
 #include "cgi.h"
 
 #include "magneto.h"
-#include "motor.h"
 #include "barcode/barcode.h"
 #include "line_detector/line_detector.h"
 
@@ -37,6 +36,7 @@ int main()
 
     sleep_ms(2000); // Delay to init everything before run
 
+    // Connect to the WiFI network - loop until connected
     while (cyw43_arch_wifi_connect_timeout_ms(WIFI_SSID, WIFI_PASSWORD, CYW43_AUTH_WPA2_AES_PSK, 30000) != 0)
     {
         printf("Attempting to connect...\n");
@@ -78,13 +78,13 @@ int main()
                 reverse(slice_num_left, slice_num_right);
                 // if obstacle is < 15cm, turn the car 90 degrees to the right
                 spin_left_90(slice_num_left, slice_num_right);
-
+                
                 stop(slice_num_left, slice_num_right);
             }
         }
         else
         {
-            // Move forward fast
+            // No obstacle detected within 30cm, move forward fast
             fast_forward(slice_num_left, slice_num_right);
         }
     }
