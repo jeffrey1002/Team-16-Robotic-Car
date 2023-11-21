@@ -2,7 +2,10 @@
 #include "pico/cyw43_arch.h"
 #include "hardware/adc.h"
 #include "hardware/gpio.h"
-#include "motor_control.h" 
+#include "motor_control.h"
+#include "constants.h"
+#include "headers.h"
+
 #include "barcode.h"
 
 volatile int forward;
@@ -38,7 +41,7 @@ u16_t ssi_handler(int iIndex, char *pcInsert, int iInsertLen) {
         break;
         case 3: // speed
         {
-            printed = snprintf(pcInsert, iInsertLen, "%.2f", current_speed);
+            printed = snprintf(pcInsert, iInsertLen, "%.2f", car_speed);
         }
         break;
         case 4: // distance_travelled 

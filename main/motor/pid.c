@@ -1,39 +1,6 @@
-// #include "headers.h" // All headers inside here
-// #include "constants.h" // All constants inside here
-// #include "motor_control.h" // Custom header file containing L298N motor, Wheel Encoder and Ultrasonic sensor functions
-
-#include <stdio.h>
-#include "pico/stdlib.h"
-#include "hardware/gpio.h"
-#include "hardware/pwm.h"
-#include "hardware/timer.h"
-// #include "motor_control.h"
-
-// GPIO pins connected to the L298N motor driver
-#define MOTOR_ENA 9  // Enable Motor A (GP9) Left motor
-#define MOTOR_IN1 10 // Motor A Input 1 (GP10)
-#define MOTOR_IN2 11 // Motor A Input 2 (GP11)
-
-#define MOTOR_ENB 8 // Enable Motor B (GP8) Right motor
-#define MOTOR_IN3 3 // Motor B Input 1 (GP3)
-#define MOTOR_IN4 4 // Motor B Input 2 (GP4)
-
-// GPIO pins connected to the Wheel Encoders
-#define ENCODER_CHANNEL_A 12 // Left Wheel Encoder (GP12)
-#define ENCODER_CHANNEL_B 7  // Right Wheel Encoder (GP7)
-
-// GPIO pins connected to the Ultrasonic sensor
-#define TRIG_PIN 5 // Trigger pin (GP5)
-#define ECHO_PIN 6 // Echo pin (GP6)
-
-// Wheel parameters (Physical)
-#define WHEEL_CIRCUMFERENCE 22.0         // 22cm
-#define ENCODER_PULSES_PER_REVOLUTION 20 // 20 holes in wheel encoder
-
-// Variables for tracking distance
-volatile int encoder_counts_left = 0;
-volatile int encoder_counts_right = 0;
-volatile float total_distance_travelled = 0.0;
+#include "headers.h" // All headers inside here
+#include "constants.h" // All constants inside here
+#include "motor_control.h" // Custom header file containing L298N motor, Wheel Encoder and Ultrasonic sensor functions
 
 // PID Constants
 // #define KP 1.0
@@ -44,7 +11,7 @@ volatile float total_distance_travelled = 0.0;
 // // PID Variables
 // float previous_error = 0.0;
 // float integral = 0.0;
-// float car_speed = 0.0;
+// volatile float car_speed = 0.0;
 
 void encoder_pulse_handler_left()
 {
@@ -138,7 +105,7 @@ void initialize_motors(uint slice_num_left, uint slice_num_right)
  * Encoder Related Functions *
  *****************************/
 
-void speed_and_distance(uint slice_num_left, uint slice_num_right)
+float speed_and_distance(uint slice_num_left, uint slice_num_right)
 {
     // Calculate RPM for both left and right wheels
     float left_wheel_rpm = (encoder_counts_left * 60.0) / (ENCODER_PULSES_PER_REVOLUTION * 1);
@@ -148,7 +115,7 @@ void speed_and_distance(uint slice_num_left, uint slice_num_right)
     float avg_wheel_rpm = (left_wheel_rpm + right_wheel_rpm) / 2.0;
 
     // Calculate car speed in centimeters per second
-    float car_speed = (avg_wheel_rpm * WHEEL_CIRCUMFERENCE * 3.14159265359) / (ENCODER_PULSES_PER_REVOLUTION * 60.0);
+    car_speed = (avg_wheel_rpm * WHEEL_CIRCUMFERENCE * 3.14159265359) / (ENCODER_PULSES_PER_REVOLUTION * 60.0);
     float distance_travelled = car_speed * 1;
 
     total_distance_travelled += distance_travelled;
@@ -159,6 +126,8 @@ void speed_and_distance(uint slice_num_left, uint slice_num_right)
 
     printf("Car Speed: %.2f cm/s\n", car_speed);
     printf("Distance travelled: %0.2fcm\n\n", total_distance_travelled);
+
+    return car_speed;
 }
 
 /************************************
