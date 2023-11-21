@@ -1,5 +1,5 @@
-#ifndef INFRARED_H
-#define INFRARED_H
+#ifndef LINE_DETECTOR_H
+#define LINE_DETECTOR_H
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -8,12 +8,10 @@
 #include "hardware/adc.h"
 
 // GPIO pins connected to IR Sensor
-#define BARCODE_AO 26
 #define LINE_DETECTOR_RIGHT_AO 27
 #define LINE_DETECTOR_LEFT_AO 28
 
 // ADC number for respective ADC pins
-#define BARCODE_NUM 0
 #define LINE_DETECTOR_RIGHT_NUM 1
 #define LINE_DETECTOR_LEFT_NUM 2
 
@@ -29,10 +27,9 @@
 volatile int line_detector_right = 0;
 volatile int line_detector_left = 0;
  
-// initializer
+// line detector initializer
 void init_line_detector()
 {
-    adc_init();
     adc_gpio_init(LINE_DETECTOR_RIGHT_AO);
     adc_gpio_init(LINE_DETECTOR_LEFT_AO);
 }

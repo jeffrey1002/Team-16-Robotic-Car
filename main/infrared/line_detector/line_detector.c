@@ -1,10 +1,9 @@
-#include "infrared.h"
-#include "../motor/motor_control.h"
+#include "line_detector.h"
+#include "../../motor/motor_control.h"
 
-// initializer
+// line detector initializer
 void init_line_detector()
 {
-    adc_init();
     adc_gpio_init(LINE_DETECTOR_RIGHT_AO);
     adc_gpio_init(LINE_DETECTOR_LEFT_AO);
 }
