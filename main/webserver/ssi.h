@@ -48,7 +48,7 @@ u16_t ssi_handler(int iIndex, char *pcInsert, int iInsertLen) {
         break;
         case 5: // barcode  
         {
-            printed = snprintf(pcInsert, iInsertLen, "%.2f", total_distance_travelled);
+            printed = snprintf(pcInsert, iInsertLen, "%.2f", barcode_value);
         }
         break;
         default:
