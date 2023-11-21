@@ -57,35 +57,43 @@ int main()
 
     while (1)
     {
-        // Read distance of nearest obstacle ahead (if any) through the ultrasonic sensor
-        float obstacle_distance = readDistance();
-
-        // Check if there is wall (black line) to change motor direction
-        line_detect_right(slice_num_left, slice_num_right);
-        line_detect_left(slice_num_left, slice_num_right);
-
-        // Check for barcode
-        scan_barcode();
-
-        // Check if an obstacle is detected within 30cm
-        if (obstacle_distance < 30.0)
+        if (forward == 1)
         {
-            // if < 30cm, activate crawl mode to approach forward slowly
-            crawl_forward(slice_num_left, slice_num_right);
-            if (obstacle_distance < 20.0)
+            // Read distance of nearest obstacle ahead (if any) through the ultrasonic sensor
+            float obstacle_distance = readDistance();
+
+            // Check if there is wall (black line) to change motor direction
+            line_detect_right(slice_num_left, slice_num_right);
+            line_detect_left(slice_num_left, slice_num_right);
+
+            // Check for barcode
+            // scan_barcode();
+
+            // Check if an obstacle is detected within 30cm
+            if (obstacle_distance < 30.0)
             {
-                // Reverse car
-                reverse(slice_num_left, slice_num_right);
-                // if obstacle is < 15cm, turn the car 90 degrees to the right
-                spin_left_90(slice_num_left, slice_num_right);
-                
-                stop(slice_num_left, slice_num_right);
+                // if < 30cm, activate crawl mode to approach forward slowly
+                crawl_forward(slice_num_left, slice_num_right);
+                if (obstacle_distance < 20.0)
+                {
+                    // Reverse car
+                    reverse(slice_num_left, slice_num_right);
+                    // if obstacle is < 15cm, turn the car 90 degrees to the right
+                    spin_left_90(slice_num_left, slice_num_right);
+
+                    stop(slice_num_left, slice_num_right);
+                }
+            }
+            else
+            {
+                // No obstacle detected within 30cm, move forward fast
+                fast_forward(slice_num_left, slice_num_right);
             }
         }
         else
         {
-            // No obstacle detected within 30cm, move forward fast
-            fast_forward(slice_num_left, slice_num_right);
+            stop(slice_num_left, slice_num_right);
         }
     }
+    return 0;
 }
