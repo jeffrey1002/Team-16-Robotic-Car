@@ -15,8 +15,6 @@ add_subdirectory(magneto)
 add_subdirectory(motor)
 add_subdirectory(barcode)
 
-
-
 # Add the main.c source file to the executable
 add_executable(${PROGRAM_NAME}
     main.c

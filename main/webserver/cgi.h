@@ -2,7 +2,7 @@
 #include "pico/cyw43_arch.h"
 #include "pico/stdlib.h"
 #include "string.h"
-#include "motor_control.h" 
+#include "motor.h" 
 
 
 extern volatile int forward;

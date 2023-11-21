@@ -1,15 +1,13 @@
 #include "lwip/apps/httpd.h"
 #include "pico/stdlib.h"
 #include "pico/cyw43_arch.h"
+#include "motor.h" 
 #include "lwipopts.h"
 #include "ssi.h"
 #include "cgi.h"
 
-#include "motor/motor_control.h" 
-
 #include "magneto.h"
 #include "barcode.h"
-
 
 // http://192.168.10.135/ 
 // http://192.168.230.42/

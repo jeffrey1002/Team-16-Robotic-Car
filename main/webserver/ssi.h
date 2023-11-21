@@ -2,9 +2,9 @@
 #include "pico/cyw43_arch.h"
 #include "hardware/adc.h"
 #include "hardware/gpio.h"
-#include "motor_control.h"
-#include "constants.h"
-#include "headers.h"
+#include "motor.h"
+// #include "constants.h"
+// #include "headers.h"
 
 #include "barcode.h"
 
