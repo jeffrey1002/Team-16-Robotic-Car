@@ -83,6 +83,7 @@ int main() {
             stop(slice_num_left, slice_num_right); 
         }
     }
+    return 0;
 }
 
     // Connect to the WiFI network - loop until connected
