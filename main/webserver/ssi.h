@@ -3,10 +3,7 @@
 #include "hardware/adc.h"
 #include "hardware/gpio.h"
 #include "motor.h"
-// #include "constants.h"
-// #include "headers.h"
-
-#include "barcode.h"
+#include "barcode/barcode.h"
 
 volatile int forward;
 
