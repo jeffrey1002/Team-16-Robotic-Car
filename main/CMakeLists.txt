@@ -13,6 +13,7 @@ pico_sdk_init()
 
 add_subdirectory(magneto)
 add_subdirectory(motor)
+add_subdirectory(barcode)
 
 
 # Add the main.c source file to the executable
