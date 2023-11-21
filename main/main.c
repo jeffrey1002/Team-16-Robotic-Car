@@ -8,9 +8,14 @@
 #include "motor_control.h" 
 
 #include "magneto.h"
+#include "barcode.h"
 
 
 // http://192.168.10.135/ 
+// http://192.168.230.42/
+
+const char WIFI_SSID[] = "Phileo's Phone";
+const char WIFI_PASSWORD[] = "93803349";
 
 const char WIFI_SSID[] = "Phileo's Phone";
 const char WIFI_PASSWORD[] = "93803349";
@@ -47,39 +52,30 @@ int main() {
     cgi_init();
     printf("CGI Handler initialised\n");
 
-    while (1)
-    {
-        // Only proceed if forward is set to 1
-        if (forward == 1)
-        {
-            // Read distance of nearest obstacle ahead (if any) through the ultrasonic sensor
-            float obstacle_distance = readDistance();
+    // while (1)
+    // {
+    //     // Read distance of nearest obstacle ahead (if any) through the ultrasonic sensor
+    //     float obstacle_distance = readDistance();
 
-            // Check if an obstacle is detected within 30cm
-            if (obstacle_distance < 30.0)
-            { 
-                // if < 30cm, activate crawl mode to approach forward slowly
-                crawl_forward(slice_num_left, slice_num_right);
-                
-                // Check if the obstacle is closer than 15cm
-                if (obstacle_distance < 15.0)
-                {
-                    // Stop moving if obstacle is closer than 15cm
-                    stop(slice_num_left, slice_num_right);
-                }
-            }
-            else
-            {
-                // No obstacle detected within 30cm, move forward fast
-                fast_forward(slice_num_left, slice_num_right);
-            }
-        }
-        else
-        {
-            // Forward is 0, stop moving 
-            stop(slice_num_left, slice_num_right); 
-        }
-    }
+    //     // Check if an obstacle is detected within 30cm
+    //     if (obstacle_distance < 30.0)
+    //     { 
+    //         // if < 30cm, activate crawl mode to approach forward slowly
+    //         crawl_forward(slice_num_left, slice_num_right);
+            
+    //         // Check if the obstacle is closer than 15cm
+    //         if (obstacle_distance < 15.0)
+    //         {
+    //             // Stop moving if obstacle is closer than 15cm
+    //             stop(slice_num_left, slice_num_right);
+    //         }
+    //     }
+    //     else
+    //     {
+    //         // No obstacle detected within 30cm, move forward fast
+    //         fast_forward(slice_num_left, slice_num_right);
+    //     }
+    // }
 
-    return 0;
+    // return 0;
 }
