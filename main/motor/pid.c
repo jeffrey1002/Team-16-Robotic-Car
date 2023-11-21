@@ -246,27 +246,6 @@ void spin_left_90(uint slice_num_left, uint slice_num_right)
     // }
 }
 
-void fast_forward(uint slice_num_left, uint slice_num_right)
-{
-    // Move forward slow
-    gpio_put(MOTOR_IN1, 1); // Left
-    gpio_put(MOTOR_IN2, 0); // Left
-    gpio_put(MOTOR_IN3, 1); // Right
-    gpio_put(MOTOR_IN4, 0); // Right
-
-    // PWM duty cycle for slow forward motion (80%)
-    pwm_set_chan_level(slice_num_right, PWM_CHAN_B, 12500); // Adjust for motor speed
-    pwm_set_chan_level(slice_num_left, PWM_CHAN_A, 12500);
-
-    speed_and_distance(slice_num_left, slice_num_right);
-
-    printf("Full Speed...\n");
-
-    sleep_ms(500); // Move forward for 1 second
-
-    stop(slice_num_left, slice_num_right); // check positions
-}
-
 // Crawl forward is used when obstacle is detected but there's still some distance
 void crawl_forward(uint slice_num_left, uint slice_num_right)
 {
@@ -285,9 +264,29 @@ void crawl_forward(uint slice_num_left, uint slice_num_right)
     printf("Crawling...\n");
 
     sleep_ms(500); // Move forward for 1 second
+}
 
-    stop(slice_num_left, slice_num_right); // check positions
+void fast_forward(uint slice_num_left, uint slice_num_right)
+{
+    // Move forward slow
+    gpio_put(MOTOR_IN1, 1); // Left
+    gpio_put(MOTOR_IN2, 0); // Left
+    gpio_put(MOTOR_IN3, 1); // Right
+    gpio_put(MOTOR_IN4, 0); // Right
 
+    // PWM duty cycle for slow forward motion (80%)
+    pwm_set_chan_level(slice_num_right, PWM_CHAN_B, 12500); // Adjust for motor speed
+    pwm_set_chan_level(slice_num_left, PWM_CHAN_A, 12500);
+
+    speed_and_distance(slice_num_left, slice_num_right);
+
+    printf("Full Speed...\n");
+
+    sleep_ms(500); // Move forward for 1 second
+
+    crawl_forward(slice_num_left, slice_num_right);
+
+    // stop(slice_num_left, slice_num_right); // check positions
 }
 
 void reverse(uint slice_num_left, uint slice_num_right)
@@ -364,7 +363,7 @@ int main()
         {
             // if < 30cm, activate crawl mode to approach forward slowly
             crawl_forward(slice_num_left, slice_num_right);
-            if (obstacle_distance < 15.0)
+            if (obstacle_distance < 20.0)
             {
                 // Reverse car
                 reverse(slice_num_left, slice_num_right);
