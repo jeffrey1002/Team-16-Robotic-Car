@@ -23,7 +23,7 @@ void line_detect_right(uint slice_num_left, uint slice_num_right)
         {
             printf(">>> line at RIGHT: detected, car is turning left\n");
             // orientate the car to turn left
-            spin_left_90(slice_num_left, slice_num_right);
+            spin_left_45(slice_num_left, slice_num_right);
         }
 
         // update state to know that motor has been changed
@@ -36,7 +36,7 @@ void line_detect_right(uint slice_num_left, uint slice_num_right)
         {
             printf(">>> line at RIGHT: car is turning back straight\n");
             // orientate the car back
-            spin_right_90(slice_num_left, slice_num_right);
+            spin_right_45(slice_num_left, slice_num_right);
         }
 
         // update state to know that motor has been changed
@@ -59,7 +59,7 @@ void line_detect_left(uint slice_num_left, uint slice_num_right)
         {
             printf(">>> line at LEFT: detected, car is turning right\n");
             // orientate the car to turn right
-            spin_right_90(slice_num_left, slice_num_right);
+            spin_right_45(slice_num_left, slice_num_right);
         }
 
         // update state to know that motor has been changed
@@ -72,7 +72,7 @@ void line_detect_left(uint slice_num_left, uint slice_num_right)
         {
             printf(">>> line at LEFT: car is turning back straight\n");
             // orientate the car back
-            spin_left_90(slice_num_left, slice_num_right);
+            spin_left_45(slice_num_left, slice_num_right);
         }
 
         // update state to know that motor has been changed

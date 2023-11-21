@@ -203,6 +203,35 @@ void spin_right_90(uint slice_num_left, uint slice_num_right)
     }
 }
 
+void spin_right_45(uint slice_num_left, uint slice_num_right)
+{
+
+    // target encoder counts for a 90-degree right turn
+    int target_counts = 10; // Assuming 20 pulses per revolution
+
+    // Reset the encoder counts
+    encoder_counts_right = 0;
+
+    // Wait until the target counts are reached
+    while (encoder_counts_right < target_counts)
+    {
+        // Turn Right
+        gpio_put(MOTOR_IN1, 1); // Left
+        gpio_put(MOTOR_IN2, 0); // Left
+        gpio_put(MOTOR_IN3, 0); // Right
+        gpio_put(MOTOR_IN4, 1); // Right
+
+        // Set the PWM duty cycle for right motion
+        pwm_set_chan_level(slice_num_right, PWM_CHAN_B, 12500); // Adjust for motor speed, max 12500
+        pwm_set_chan_level(slice_num_left, PWM_CHAN_A, 12500);
+
+        printf("Turning right >>>>\n");
+
+        sleep_ms(350); // Spin right for 0.5 second
+    }
+}
+
+
 // Function to spin the car LEFT 90 degrees
 void spin_left_90(uint slice_num_left, uint slice_num_right)
 {
@@ -236,6 +265,38 @@ void spin_left_90(uint slice_num_left, uint slice_num_right)
     // }
 }
 
+void spin_left_45(uint slice_num_left, uint slice_num_right)
+{
+
+    // target encoder counts for a 90-degree left turn
+    // int target_counts = 10; // Assuming 20 pulses per revolution
+
+    // // Reset the encoder counts
+    // encoder_counts_left = 0;
+
+        // Turn Left
+        gpio_put(MOTOR_IN1, 0); // Left
+        gpio_put(MOTOR_IN2, 1); // Left
+        gpio_put(MOTOR_IN3, 1); // Right
+        gpio_put(MOTOR_IN4, 0); // Right
+
+        // Set the PWM duty cycle for left motion
+        pwm_set_chan_level(slice_num_right, PWM_CHAN_B, 12500); // Adjust for motor speed, max 12500
+        pwm_set_chan_level(slice_num_left, PWM_CHAN_A, 12500);
+
+        printf("Turning left <<<<\n");
+
+        sleep_ms(350); // Spin left for 0.5 second
+
+        stop(slice_num_left, slice_num_right);
+
+    // Wait until the target counts are reached
+    // while (encoder_counts_left < target_counts)
+    // {
+
+    // }
+}
+
 // Crawl forward is used when obstacle is detected but there's still some distance
 void crawl_forward(uint slice_num_left, uint slice_num_right)
 {
@@ -246,8 +307,8 @@ void crawl_forward(uint slice_num_left, uint slice_num_right)
     gpio_put(MOTOR_IN4, 0); // Right
 
     // PWM duty cycle for slow forward motion (80%)
-    pwm_set_chan_level(slice_num_right, PWM_CHAN_B, 9000); // Adjust for motor speed
-    pwm_set_chan_level(slice_num_left, PWM_CHAN_A, 9000);
+    pwm_set_chan_level(slice_num_right, PWM_CHAN_B, 4000); // Adjust for motor speed
+    pwm_set_chan_level(slice_num_left, PWM_CHAN_A, 4000);
 
     speed_and_distance(slice_num_left, slice_num_right);
 
@@ -265,8 +326,8 @@ void fast_forward(uint slice_num_left, uint slice_num_right)
     gpio_put(MOTOR_IN4, 0); // Right
 
     // PWM duty cycle for slow forward motion (80%)
-    pwm_set_chan_level(slice_num_right, PWM_CHAN_B, 12500); // Adjust for motor speed
-    pwm_set_chan_level(slice_num_left, PWM_CHAN_A, 12500);
+    pwm_set_chan_level(slice_num_right, PWM_CHAN_B, 6500); // Adjust for motor speed
+    pwm_set_chan_level(slice_num_left, PWM_CHAN_A, 6500);
 
     speed_and_distance(slice_num_left, slice_num_right);
 
