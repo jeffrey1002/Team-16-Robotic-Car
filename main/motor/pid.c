@@ -36,15 +36,15 @@ volatile int encoder_counts_right = 0;
 volatile float total_distance_travelled = 0.0;
 
 // PID Constants
-#define KP 1.0
-#define KI 0.1
-#define KD 0.01
-#define SET_POINT_SPEED 23
+// #define KP 1.0
+// #define KI 0.1
+// #define KD 0.01
+// #define SET_POINT_SPEED 23
 
-// PID Variables
-float previous_error = 0.0;
-float integral = 0.0;
-float car_speed = 0.0;
+// // PID Variables
+// float previous_error = 0.0;
+// float integral = 0.0;
+// float car_speed = 0.0;
 
 void encoder_pulse_handler_left()
 {
@@ -118,21 +118,21 @@ void initialize_motors(uint slice_num_left, uint slice_num_right)
  * PID stuff *
  ************/
 
-// Function to calculate PID control signal
-float calculate_pid(float setpoint, float current_value)
-{
-    float error = setpoint - current_value;
-    integral += error;
-    float derivative = error - previous_error;
+// // Function to calculate PID control signal
+// float calculate_pid(float setpoint, float current_value)
+// {
+//     float error = setpoint - current_value;
+//     integral += error;
+//     float derivative = error - previous_error;
 
-    // Calculate PID output
-    float pid_output = KP * error + KI * integral + KD * derivative;
+//     // Calculate PID output
+//     float pid_output = KP * error + KI * integral + KD * derivative;
 
-    // Update previous error for the next iteration
-    previous_error = error;
+//     // Update previous error for the next iteration
+//     previous_error = error;
 
-    return pid_output;
-}
+//     return pid_output;
+// }
 
 /*****************************
  * Encoder Related Functions *
@@ -148,7 +148,7 @@ void speed_and_distance(uint slice_num_left, uint slice_num_right)
     float avg_wheel_rpm = (left_wheel_rpm + right_wheel_rpm) / 2.0;
 
     // Calculate car speed in centimeters per second
-    car_speed = (avg_wheel_rpm * WHEEL_CIRCUMFERENCE * 3.14159265359) / (ENCODER_PULSES_PER_REVOLUTION * 60.0);
+    float car_speed = (avg_wheel_rpm * WHEEL_CIRCUMFERENCE * 3.14159265359) / (ENCODER_PULSES_PER_REVOLUTION * 60.0);
     float distance_travelled = car_speed * 1;
 
     total_distance_travelled += distance_travelled;
@@ -164,6 +164,25 @@ void speed_and_distance(uint slice_num_left, uint slice_num_right)
 /************************************
  * Motor Movement Related Functions *
  ************************************/
+
+void stop(uint slice_num_left, uint slice_num_right)
+{
+    // Move forward fast
+    gpio_put(MOTOR_IN1, 0); // Left
+    gpio_put(MOTOR_IN2, 0); // Left
+    gpio_put(MOTOR_IN3, 0); // Right
+    gpio_put(MOTOR_IN4, 0); // Right
+
+    // Set the PWM duty cycle for forward motion
+    pwm_set_chan_level(slice_num_right, PWM_CHAN_B, 0); // Adjust for motor speed
+    pwm_set_chan_level(slice_num_left, PWM_CHAN_A, 0);
+
+    speed_and_distance(slice_num_left, slice_num_right);
+
+    printf("Stop...\n");
+
+    sleep_ms(500); // Stop for 1 second
+}
 
 // Function to spin the car RIGHT 90 degrees
 void spin_right_90(uint slice_num_left, uint slice_num_right)
@@ -185,8 +204,8 @@ void spin_right_90(uint slice_num_left, uint slice_num_right)
         gpio_put(MOTOR_IN4, 1); // Right
 
         // Set the PWM duty cycle for right motion
-        pwm_set_chan_level(slice_num_right, PWM_CHAN_A, 12500); // Adjust for motor speed, max 12500
-        pwm_set_chan_level(slice_num_left, PWM_CHAN_B, 12500);
+        pwm_set_chan_level(slice_num_right, PWM_CHAN_B, 12500); // Adjust for motor speed, max 12500
+        pwm_set_chan_level(slice_num_left, PWM_CHAN_A, 12500);
 
         printf("Turning right >>>>\n");
 
@@ -199,14 +218,11 @@ void spin_left_90(uint slice_num_left, uint slice_num_right)
 {
 
     // target encoder counts for a 90-degree left turn
-    int target_counts = 10; // Assuming 20 pulses per revolution
+    // int target_counts = 10; // Assuming 20 pulses per revolution
 
-    // Reset the encoder counts
-    encoder_counts_left = 0;
+    // // Reset the encoder counts
+    // encoder_counts_left = 0;
 
-    // Wait until the target counts are reached
-    while (encoder_counts_left < target_counts)
-    {
         // Turn Left
         gpio_put(MOTOR_IN1, 0); // Left
         gpio_put(MOTOR_IN2, 1); // Left
@@ -214,34 +230,41 @@ void spin_left_90(uint slice_num_left, uint slice_num_right)
         gpio_put(MOTOR_IN4, 0); // Right
 
         // Set the PWM duty cycle for left motion
-        pwm_set_chan_level(slice_num_right, PWM_CHAN_A, 12500); // Adjust for motor speed, max 12500
-        pwm_set_chan_level(slice_num_left, PWM_CHAN_B, 12500);
+        pwm_set_chan_level(slice_num_right, PWM_CHAN_B, 12500); // Adjust for motor speed, max 12500
+        pwm_set_chan_level(slice_num_left, PWM_CHAN_A, 12500);
 
         printf("Turning left <<<<\n");
 
         sleep_ms(500); // Spin left for 0.5 second
-    }
+
+        stop(slice_num_left, slice_num_right);
+
+    // Wait until the target counts are reached
+    // while (encoder_counts_left < target_counts)
+    // {
+
+    // }
 }
 
 void fast_forward(uint slice_num_left, uint slice_num_right)
 {
-    // Move forward fast
+    // Move forward slow
     gpio_put(MOTOR_IN1, 1); // Left
     gpio_put(MOTOR_IN2, 0); // Left
     gpio_put(MOTOR_IN3, 1); // Right
     gpio_put(MOTOR_IN4, 0); // Right
 
-    // Use PID control to adjust motor speeds
+    // PWM duty cycle for slow forward motion (80%)
+    pwm_set_chan_level(slice_num_right, PWM_CHAN_B, 12500); // Adjust for motor speed
+    pwm_set_chan_level(slice_num_left, PWM_CHAN_A, 12500);
+
     speed_and_distance(slice_num_left, slice_num_right);
-    float pid_output = calculate_pid(SET_POINT_SPEED, car_speed);
 
-    // Set the PWM duty cycle for forward motion based on pid_output
-    pwm_set_chan_level(slice_num_right, PWM_CHAN_A, (uint16_t)(pid_output * 12500));
-    pwm_set_chan_level(slice_num_left, PWM_CHAN_B, (uint16_t)(pid_output * 12500));
+    printf("Full Speed...\n");
 
-    printf("Full speed!!!!\n");
+    sleep_ms(500); // Move forward for 1 second
 
-    sleep_ms(1000); // Move forward for 1 second
+    stop(slice_num_left, slice_num_right); // check positions
 }
 
 // Crawl forward is used when obstacle is detected but there's still some distance
@@ -254,14 +277,17 @@ void crawl_forward(uint slice_num_left, uint slice_num_right)
     gpio_put(MOTOR_IN4, 0); // Right
 
     // PWM duty cycle for slow forward motion (80%)
-    pwm_set_chan_level(slice_num_right, PWM_CHAN_A, 6250); // Adjust for motor speed
-    pwm_set_chan_level(slice_num_left, PWM_CHAN_B, 6250);
+    pwm_set_chan_level(slice_num_right, PWM_CHAN_B, 9000); // Adjust for motor speed
+    pwm_set_chan_level(slice_num_left, PWM_CHAN_A, 9000);
 
     speed_and_distance(slice_num_left, slice_num_right);
 
     printf("Crawling...\n");
 
-    sleep_ms(1000); // Move forward for 1 second
+    sleep_ms(500); // Move forward for 1 second
+
+    stop(slice_num_left, slice_num_right); // check positions
+
 }
 
 void reverse(uint slice_num_left, uint slice_num_right)
@@ -273,33 +299,14 @@ void reverse(uint slice_num_left, uint slice_num_right)
     gpio_put(MOTOR_IN4, 1); // Right
 
     // Set the PWM duty cycle for forward motion
-    pwm_set_chan_level(slice_num_right, PWM_CHAN_A, 12500); // Adjust for motor speed
-    pwm_set_chan_level(slice_num_left, PWM_CHAN_B, 12500);
+    pwm_set_chan_level(slice_num_right, PWM_CHAN_B, 12500); // Adjust for motor speed
+    pwm_set_chan_level(slice_num_left, PWM_CHAN_A, 12500);
 
     speed_and_distance(slice_num_left, slice_num_right);
 
     printf("Reversing...\n");
 
     sleep_ms(1000); // Move forward for 1 second
-}
-
-void stop(uint slice_num_left, uint slice_num_right)
-{
-    // Move forward fast
-    gpio_put(MOTOR_IN1, 0); // Left
-    gpio_put(MOTOR_IN2, 0); // Left
-    gpio_put(MOTOR_IN3, 0); // Right
-    gpio_put(MOTOR_IN4, 0); // Right
-
-    // Set the PWM duty cycle for forward motion
-    pwm_set_chan_level(slice_num_right, PWM_CHAN_A, 0); // Adjust for motor speed
-    pwm_set_chan_level(slice_num_left, PWM_CHAN_B, 0);
-
-    speed_and_distance(slice_num_left, slice_num_right);
-
-    printf("Stop...\n");
-
-    sleep_ms(1000); // Stop for 1 second
 }
 
 /***************************************
@@ -359,10 +366,11 @@ int main()
             crawl_forward(slice_num_left, slice_num_right);
             if (obstacle_distance < 15.0)
             {
-                // if obstacle is < 15cm, turn the car 90 degrees to the right
-                spin_right_90(slice_num_left, slice_num_right);
                 // Reverse car
                 reverse(slice_num_left, slice_num_right);
+                // if obstacle is < 15cm, turn the car 90 degrees to the right
+                spin_left_90(slice_num_left, slice_num_right);
+                
                 stop(slice_num_left, slice_num_right);
             }
         }
