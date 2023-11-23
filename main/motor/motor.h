@@ -212,23 +212,75 @@ void spin_right_45(uint slice_num_left, uint slice_num_right)
     // Reset the encoder counts
     encoder_counts_right = 0;
 
-    // Wait until the target counts are reached
-    while (encoder_counts_right < target_counts)
-    {
-        // Turn Right
-        gpio_put(MOTOR_IN1, 1); // Left
-        gpio_put(MOTOR_IN2, 0); // Left
-        gpio_put(MOTOR_IN3, 0); // Right
-        gpio_put(MOTOR_IN4, 1); // Right
+    // Turn Right
+    gpio_put(MOTOR_IN1, 1); // Left
+    gpio_put(MOTOR_IN2, 0); // Left
+    gpio_put(MOTOR_IN3, 0); // Right
+    gpio_put(MOTOR_IN4, 1); // Right
 
-        // Set the PWM duty cycle for right motion
-        pwm_set_chan_level(slice_num_right, PWM_CHAN_B, 12500); // Adjust for motor speed, max 12500
-        pwm_set_chan_level(slice_num_left, PWM_CHAN_A, 12500);
+    // Set the PWM duty cycle for right motion
+    pwm_set_chan_level(slice_num_right, PWM_CHAN_B, 10000); // Adjust for motor speed, max 12500
+    pwm_set_chan_level(slice_num_left, PWM_CHAN_A, 10000);
 
-        printf("Turning right >>>>\n");
+    printf("Turning right >>>>\n");
 
-        sleep_ms(350); // Spin right for 0.5 second
-    }
+    sleep_ms(200); // Spin right for 0.5 second
+
+    gpio_put(MOTOR_IN1, 0); // Left
+    gpio_put(MOTOR_IN2, 0); // Left
+    gpio_put(MOTOR_IN3, 0); // Right
+    gpio_put(MOTOR_IN4, 0); // Right
+
+    // Set the PWM duty cycle for forward motion
+    pwm_set_chan_level(slice_num_right, PWM_CHAN_B, 0); // Adjust for motor speed
+    pwm_set_chan_level(slice_num_left, PWM_CHAN_A, 0);
+
+    speed_and_distance(slice_num_left, slice_num_right);
+
+    printf("Stop...\n");
+
+    sleep_ms(1000); // Stop for 1 second
+
+}
+
+void spin_right_180(uint slice_num_left, uint slice_num_right)
+{
+
+    // target encoder counts for a 90-degree right turn
+    int target_counts = 10; // Assuming 20 pulses per revolution
+
+    // Reset the encoder counts
+    encoder_counts_right = 0;
+
+    // Turn Right
+    gpio_put(MOTOR_IN1, 1); // Left
+    gpio_put(MOTOR_IN2, 0); // Left
+    gpio_put(MOTOR_IN3, 0); // Right
+    gpio_put(MOTOR_IN4, 1); // Right
+
+    // Set the PWM duty cycle for right motion
+    pwm_set_chan_level(slice_num_right, PWM_CHAN_B, 10000); // Adjust for motor speed, max 12500
+    pwm_set_chan_level(slice_num_left, PWM_CHAN_A, 10000);
+
+    printf("Turning right >>>>\n");
+
+    sleep_ms(150); // Spin right for 0.5 second
+
+    gpio_put(MOTOR_IN1, 0); // Left
+    gpio_put(MOTOR_IN2, 0); // Left
+    gpio_put(MOTOR_IN3, 0); // Right
+    gpio_put(MOTOR_IN4, 0); // Right
+
+    // Set the PWM duty cycle for forward motion
+    pwm_set_chan_level(slice_num_right, PWM_CHAN_B, 0); // Adjust for motor speed
+    pwm_set_chan_level(slice_num_left, PWM_CHAN_A, 0);
+
+    speed_and_distance(slice_num_left, slice_num_right);
+
+    printf("Stop...\n");
+
+    sleep_ms(750); // Stop for 1 second
+
 }
 
 
@@ -281,14 +333,27 @@ void spin_left_45(uint slice_num_left, uint slice_num_right)
         gpio_put(MOTOR_IN4, 0); // Right
 
         // Set the PWM duty cycle for left motion
-        pwm_set_chan_level(slice_num_right, PWM_CHAN_B, 12500); // Adjust for motor speed, max 12500
-        pwm_set_chan_level(slice_num_left, PWM_CHAN_A, 12500);
+        pwm_set_chan_level(slice_num_right, PWM_CHAN_B, 10000); // Adjust for motor speed, max 12500
+        pwm_set_chan_level(slice_num_left, PWM_CHAN_A, 10000);
 
         printf("Turning left <<<<\n");
 
         sleep_ms(350); // Spin left for 0.5 second
 
-        stop(slice_num_left, slice_num_right);
+        gpio_put(MOTOR_IN1, 0); // Left
+        gpio_put(MOTOR_IN2, 0); // Left
+        gpio_put(MOTOR_IN3, 0); // Right
+        gpio_put(MOTOR_IN4, 0); // Right
+
+        // Set the PWM duty cycle for forward motion
+        pwm_set_chan_level(slice_num_right, PWM_CHAN_B, 0); // Adjust for motor speed
+        pwm_set_chan_level(slice_num_left, PWM_CHAN_A, 0);
+
+        speed_and_distance(slice_num_left, slice_num_right);
+
+        printf("Stop...\n");
+
+        sleep_ms(1000); // Stop for 1 second
 
     // Wait until the target counts are reached
     // while (encoder_counts_left < target_counts)
@@ -307,14 +372,14 @@ void crawl_forward(uint slice_num_left, uint slice_num_right)
     gpio_put(MOTOR_IN4, 0); // Right
 
     // PWM duty cycle for slow forward motion (80%)
-    pwm_set_chan_level(slice_num_right, PWM_CHAN_B, 4000); // Adjust for motor speed
-    pwm_set_chan_level(slice_num_left, PWM_CHAN_A, 4000);
+    pwm_set_chan_level(slice_num_right, PWM_CHAN_B, 6250); // Adjust for motor speed
+    pwm_set_chan_level(slice_num_left, PWM_CHAN_A, 6250);
 
     speed_and_distance(slice_num_left, slice_num_right);
 
     printf("Crawling...\n");
 
-    sleep_ms(500); // Move forward for 1 second
+    sleep_ms(100); // Move forward for 1 second
 }
 
 void fast_forward(uint slice_num_left, uint slice_num_right)
@@ -326,18 +391,29 @@ void fast_forward(uint slice_num_left, uint slice_num_right)
     gpio_put(MOTOR_IN4, 0); // Right
 
     // PWM duty cycle for slow forward motion (80%)
-    pwm_set_chan_level(slice_num_right, PWM_CHAN_B, 6500); // Adjust for motor speed
-    pwm_set_chan_level(slice_num_left, PWM_CHAN_A, 6500);
+    pwm_set_chan_level(slice_num_right, PWM_CHAN_B, 10000); // Adjust for motor speed
+    pwm_set_chan_level(slice_num_left, PWM_CHAN_A, 10000);
 
     speed_and_distance(slice_num_left, slice_num_right);
 
     printf("Full Speed...\n");
 
-    sleep_ms(500); // Move forward for 1 second
+    sleep_ms(100); // Move forward for 0.1 second
 
-    crawl_forward(slice_num_left, slice_num_right);
+    gpio_put(MOTOR_IN1, 0); // Left
+    gpio_put(MOTOR_IN2, 0); // Left
+    gpio_put(MOTOR_IN3, 0); // Right
+    gpio_put(MOTOR_IN4, 0); // Right
 
-    // stop(slice_num_left, slice_num_right); // check positions
+    // Set the PWM duty cycle for forward motion
+    pwm_set_chan_level(slice_num_right, PWM_CHAN_B, 0); // Adjust for motor speed
+    pwm_set_chan_level(slice_num_left, PWM_CHAN_A, 0);
+
+    speed_and_distance(slice_num_left, slice_num_right);
+
+    printf("Stop...\n");
+
+    sleep_ms(20); // Stop for 0.02 second
 }
 
 void reverse(uint slice_num_left, uint slice_num_right)
