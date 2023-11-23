@@ -22,15 +22,18 @@
 
 // ADC voltage threshold for black line
 #define THRESHOLD 0.165f
+// Total number of bars for single char including delimeter
+#define TOTAL_BARS 29
 
 // Defined barcode character to send to UI
 volatile char barcode_value;
 
-// Defined trackers
-int cur_line = 0;
+// Total color barcode counted during detection
 int black_counter = 0;
 int white_counter = 0;
+// Total counter, max 29
 int total_counter = 0;
+// Thickness counter
 int thick_counter = 0;
 int thin_counter = 0;
 
@@ -81,13 +84,11 @@ charmap characterMappings[] = {
 void init_barcode()
 {
     adc_gpio_init(BARCODE_AO);
-    adc_select_input(BARCODE_NUM);
 }
 
 char char_search(const char *substring)
 {
     const char *searchSubstring = (substring[0] == '0') ? (substring + 1) : substring;
-    printf("this is the stored afterrrrrr before process: %s\n", searchSubstring);
 
     // Loop through characterMappings array
     for (size_t i = 0; i < sizeof(characterMappings) / sizeof(characterMappings[0]); ++i)
@@ -106,6 +107,7 @@ char char_search(const char *substring)
 
 void scan_barcode()
 {
+    adc_select_input(BARCODE_NUM);
     uint16_t adc_barcode = adc_read();
     float converted_adc_barcode = adc_barcode * ADC_CONVERT;
 
@@ -114,14 +116,14 @@ void scan_barcode()
     {
         while (1)
         {
-            char *line_color = (converted_adc_barcode > 0.160) ? "black" : "white";
-            int line_color_code = (converted_adc_barcode > 0.160) ? 1 : 0;
-            char *white_thick_line = (converted_adc_barcode < 0.110) ? "thick" : "thin";
-            char *black_thick_line = (converted_adc_barcode > 0.200) ? "thick" : "thin";
+            adc_barcode = adc_read();
+            converted_adc_barcode = adc_barcode * ADC_CONVERT;
 
+            // 1 is black, 0 is white
+            int line_color_code = (converted_adc_barcode > 0.160) ? 1 : 0;
             // 1 is thick, 0 is thin
-            int white_thick_line_code = (converted_adc_barcode < 0.110) ? 1 : 0;
-            int black_thick_line_code = (converted_adc_barcode > 0.200) ? 1 : 0;
+            int white_thick_line_code = (converted_adc_barcode < 0.135) ? 1 : 0;
+            int black_thick_line_code = (converted_adc_barcode > 0.400) ? 1 : 0;
 
             // black
             if (line_color_code == 1)
@@ -133,6 +135,7 @@ void scan_barcode()
                     total_counter += 1;
                     white_counter = 0;
 
+                    // Actual character barcode from 11 - 19
                     if (total_counter >= 11 && total_counter <= 19)
                     {
                         if (thick_counter > thin_counter)
@@ -160,7 +163,9 @@ void scan_barcode()
                 {
                     thin_counter += 1;
                 }
-                printf("Voltage: %f V, Line Detected: %s %s\n", converted_adc_barcode, line_color, black_thick_line);
+                printf("Voltage: %f V, Line Detected: black %s\n",
+                       converted_adc_barcode,
+                       (black_thick_line_code == 1) ? "thick" : "thin");
             }
             else // white
             {
@@ -172,6 +177,7 @@ void scan_barcode()
                         total_counter += 1;
                         black_counter = 0;
 
+                        // Actual character barcode from 11 - 19
                         if (total_counter >= 11 && total_counter <= 19)
                         {
                             if (thick_counter > thin_counter)
@@ -199,21 +205,22 @@ void scan_barcode()
                     {
                         thin_counter += 1;
                     }
-                    printf("Voltage: %f V, Line Detected: %s %s\n", converted_adc_barcode, line_color, white_thick_line);
+                    printf("Voltage: %f V, Line Detected: white %s\n",
+                           converted_adc_barcode,
+                           (white_thick_line_code == 1) ? "thick" : "thin");
                 }
             }
 
             printf("this is the total counter: %d\n", total_counter);
 
-            if (total_counter >= 29)
+            // reset state and print out detected after 29 bars
+            if (total_counter >= TOTAL_BARS)
             {
                 start_to_track = 0;
                 total_counter = 0;
-                printf("this is the stored string before process: %s\n", barcode);
-                // call the handler function to return value
+                printf("this is the stored string: %s\n", barcode);
                 printf("this is the determined character: %c\n", char_search(barcode));
                 memset(barcode, 0, sizeof(barcode));
-                printf("this is the stored string aft reset: %s\n", barcode);
 
                 break;
             }
