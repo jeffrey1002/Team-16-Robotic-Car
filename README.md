@@ -26,5 +26,5 @@ There are various [methods](https://datasheets.raspberrypi.com/pico/getting-star
 
 ##### Flowchart
 https://drive.google.com/file/d/1GpDOMLDx5xElrJfJiDJTu_KfLLIF3ubz/view?usp=sharing
-![Robot_Car_Flowchart drawio](https://github.com/jeffrey1002/Team-16-Robotic-Car/assets/115239275/238cc755-a5c8-4a82-a0d7-a5bf6dba4140)
+![Robot_Car_Flowchart_BlockDiagram drawio](https://github.com/jeffrey1002/Team-16-Robotic-Car/assets/115239275/60cae7c7-8f56-40aa-b9a0-33daa5e0282a)
 
