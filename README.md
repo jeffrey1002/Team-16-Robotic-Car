@@ -1,4 +1,4 @@
-# Robotic-Car
+# Team 16 Robotic-Car
 
 ##### Hardware
 * Raspberry Pico
@@ -23,3 +23,8 @@
 
 ##### Setting up environment 
 There are various [methods](https://datasheets.raspberrypi.com/pico/getting-started-with-pico.pdf) (see chapters 2 and 9) to setup the development environment for the pico in C using the Pico SDK, depending on what OS you are using on your PC/laptop. However, if you are using Windows OS, the easiest way is to download and install [this](https://github.com/raspberrypi/pico-setup-windows/releases/latest/download/pico-setup-windows-x64-standalone.exe) tool.
+
+##### Flowchart
+https://drive.google.com/file/d/1GpDOMLDx5xElrJfJiDJTu_KfLLIF3ubz/view?usp=sharing
+![Robot_Car_Flowchart drawio](https://github.com/jeffrey1002/Team-16-Robotic-Car/assets/115239275/238cc755-a5c8-4a82-a0d7-a5bf6dba4140)
+
