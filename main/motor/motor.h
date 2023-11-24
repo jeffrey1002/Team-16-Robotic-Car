@@ -264,7 +264,7 @@ void spin_right_180(uint slice_num_left, uint slice_num_right)
 
     printf("Turning right >>>>\n");
 
-    sleep_ms(150); // Spin right for 0.5 second
+    sleep_ms(750); // Spin right for 0.5 second
 
     gpio_put(MOTOR_IN1, 0); // Left
     gpio_put(MOTOR_IN2, 0); // Left
@@ -279,7 +279,7 @@ void spin_right_180(uint slice_num_left, uint slice_num_right)
 
     printf("Stop...\n");
 
-    sleep_ms(750); // Stop for 1 second
+    sleep_ms(1000); // Stop for 1 second
 
 }
 
@@ -338,7 +338,7 @@ void spin_left_45(uint slice_num_left, uint slice_num_right)
 
         printf("Turning left <<<<\n");
 
-        sleep_ms(350); // Spin left for 0.5 second
+        sleep_ms(200); // Spin left for 0.5 second
 
         gpio_put(MOTOR_IN1, 0); // Left
         gpio_put(MOTOR_IN2, 0); // Left

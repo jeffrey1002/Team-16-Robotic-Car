@@ -65,7 +65,7 @@ void line_detect_right(uint slice_num_left, uint slice_num_right)
     {
         printf(">>> line at BOTH: detected, car is turning left\n");
         // turn left
-        spin_left_45(slice_num_left, slice_num_right);
+        spin_left_90(slice_num_left, slice_num_right);
 
         // check after right turn if there is a wall again
         read_input();
@@ -73,6 +73,7 @@ void line_detect_right(uint slice_num_left, uint slice_num_right)
         {
             printf(">>> line at BOTH: detected again, car is turning 180\n");
             // turn 180
+            spin_right_180(slice_num_left, slice_num_right);
         }
     }
     else if (converted_adc_line_right > THRESHOLD)
@@ -120,7 +121,7 @@ void line_detect_left(uint slice_num_left, uint slice_num_right)
     {
         printf(">>> line at BOTH: detected, car is turning left\n");
         // turn left
-        spin_left_45(slice_num_left, slice_num_right);
+        spin_left_90(slice_num_left, slice_num_right);
 
         // check after right turn if there is a wall again
         read_input();
@@ -128,6 +129,7 @@ void line_detect_left(uint slice_num_left, uint slice_num_right)
         {
             printf(">>> line at BOTH: detected again, car is turning 180\n");
             // turn 180
+            spin_right_180(slice_num_left, slice_num_right);
         }
     }
     else if (converted_adc_line_left > THRESHOLD)
