@@ -134,9 +134,9 @@ float speed_and_distance(uint slice_num_left, uint slice_num_right)
 
     // Calculate average wheel RPM
     float avg_wheel_rpm = (left_wheel_rpm + right_wheel_rpm) / 2.0;
-
+    
     // Calculate car speed in centimeters per second
-    float car_speed = (avg_wheel_rpm * WHEEL_CIRCUMFERENCE * 3.14159265359) / (ENCODER_PULSES_PER_REVOLUTION * 60.0);
+    car_speed = (avg_wheel_rpm * WHEEL_CIRCUMFERENCE * 3.14159265359) / (ENCODER_PULSES_PER_REVOLUTION * 60.0);
     float distance_travelled = car_speed * 1;
 
     total_distance_travelled += distance_travelled;

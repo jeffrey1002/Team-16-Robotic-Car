@@ -36,6 +36,8 @@ int total_counter = 0;
 // Thickness counter
 int thick_counter = 0;
 int thin_counter = 0;
+// If timer exceeds 5000 counts, reset the count
+int timer_count = 0;
 
 int start_to_track = 0; // inital false
 
@@ -122,7 +124,7 @@ void scan_barcode()
             // 1 is black, 0 is white
             int line_color_code = (converted_adc_barcode > 0.160) ? 1 : 0;
             // 1 is thick, 0 is thin
-            int white_thick_line_code = (converted_adc_barcode < 0.135) ? 1 : 0;
+            int white_thick_line_code = (converted_adc_barcode < 0.140) ? 1 : 0;
             int black_thick_line_code = (converted_adc_barcode > 0.400) ? 1 : 0;
 
             // black
@@ -132,6 +134,7 @@ void scan_barcode()
 
                 if (white_counter > 0)
                 {
+                    timer_count = 0;
                     total_counter += 1;
                     white_counter = 0;
 
@@ -174,6 +177,7 @@ void scan_barcode()
                 {
                     if (black_counter > 0)
                     {
+                        timer_count = 0;
                         total_counter += 1;
                         black_counter = 0;
 
@@ -221,6 +225,17 @@ void scan_barcode()
                 printf("this is the stored string: %s\n", barcode);
                 printf("this is the determined character: %c\n", char_search(barcode));
                 memset(barcode, 0, sizeof(barcode));
+
+                break;
+            }
+
+            timer_count += 1;
+            
+            // reset barcode detection
+            if (timer_count > 5000)
+            {
+                total_counter = 0;
+                timer_count = 0;
 
                 break;
             }
