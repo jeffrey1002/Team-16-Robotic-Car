@@ -95,6 +95,25 @@ int main()
             stop(slice_num_left, slice_num_right);
             line_detector_right = 0; 
             line_detector_left = 0;
+            
+            printf("Map:\n");
+            printf("|-----------------------------------------------------------|\n");
+            printf("|         |                                                 |\n");
+            printf("|         |                                                 |\n");
+            printf("|         |         __________           _________          |\n");
+            printf("|                             |         |                    \n");
+            printf("|                             |         |                    \n");
+            printf("|                             |         |                    \n");
+            printf("|          ________           |         |_________           \n");
+            printf("                   |          |         |                   |\n");
+            printf("                   |          |         |                   |\n");
+            printf("                   |          |         |                   |\n");
+            printf("           ________|          |         |         __________|\n");
+            printf("|          |                  |         |                   |\n");
+            printf("|          |                  |         |                   |\n");
+            printf("|          |                  |         |                   |\n");
+            printf("|          |                  |         |                   |\n");
+            printf("|-----------------------------------------------------------|\n");
         }
     }
     return 0;
