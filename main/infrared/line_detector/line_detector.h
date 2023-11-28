@@ -21,7 +21,7 @@
     #define ADC_CONVERT (ADC_VREF / ADC_RANGE)
 
     // ADC voltage threshold for black line
-    #define THRESHOLD 0.165f
+    #define THRESHOLD 0.18f
 
 // variables for tracking motor change state
 volatile int line_detector_right = 0;

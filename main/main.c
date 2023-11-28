@@ -67,7 +67,7 @@ int main()
             line_detect_left(slice_num_left, slice_num_right);
 
             // Check for barcode
-            scan_barcode();
+            // scan_barcode();
 
             // Check if an obstacle is detected within 30cm
             if (obstacle_distance < 30.0)
