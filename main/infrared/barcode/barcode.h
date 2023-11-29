@@ -215,27 +215,18 @@ void scan_barcode()
                 }
             }
 
+            timer_count += 1;
             printf("this is the total counter: %d\n", total_counter);
 
             // reset state and print out detected after 29 bars
-            if (total_counter >= TOTAL_BARS)
+            if (timer_count > 5000 && total_counter >= TOTAL_BARS)
             {
                 start_to_track = 0;
+                timer_count = 0;
                 total_counter = 0;
                 printf("this is the stored string: %s\n", barcode);
                 printf("this is the determined character: %c\n", char_search(barcode));
                 memset(barcode, 0, sizeof(barcode));
-
-                break;
-            }
-
-            timer_count += 1;
-            
-            // reset barcode detection
-            if (timer_count > 5000)
-            {
-                total_counter = 0;
-                timer_count = 0;
 
                 break;
             }

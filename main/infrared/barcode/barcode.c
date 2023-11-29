@@ -35,13 +35,6 @@ charmap characterMappings[] = {
 void init_barcode()
 {
     adc_gpio_init(BARCODE_AO);
-    adc_select_input(BARCODE_NUM);
-}
-
-// Barcode initializer
-void init_barcode()
-{
-    adc_gpio_init(BARCODE_AO);
 }
 
 char char_search(const char *substring)
@@ -80,7 +73,7 @@ void scan_barcode()
             // 1 is black, 0 is white
             int line_color_code = (converted_adc_barcode > 0.160) ? 1 : 0;
             // 1 is thick, 0 is thin
-            int white_thick_line_code = (converted_adc_barcode < 0.135) ? 1 : 0;
+            int white_thick_line_code = (converted_adc_barcode < 0.140) ? 1 : 0;
             int black_thick_line_code = (converted_adc_barcode > 0.400) ? 1 : 0;
 
             // black
@@ -90,6 +83,7 @@ void scan_barcode()
 
                 if (white_counter > 0)
                 {
+                    timer_count = 0;
                     total_counter += 1;
                     white_counter = 0;
 
@@ -132,6 +126,7 @@ void scan_barcode()
                 {
                     if (black_counter > 0)
                     {
+                        timer_count = 0;
                         total_counter += 1;
                         black_counter = 0;
 
@@ -169,12 +164,14 @@ void scan_barcode()
                 }
             }
 
+            timer_count += 1;
             printf("this is the total counter: %d\n", total_counter);
 
             // reset state and print out detected after 29 bars
-            if (total_counter >= TOTAL_BARS)
+            if (timer_count > 5000 && total_counter >= TOTAL_BARS)
             {
                 start_to_track = 0;
+                timer_count = 0;
                 total_counter = 0;
                 printf("this is the stored string: %s\n", barcode);
                 printf("this is the determined character: %c\n", char_search(barcode));
